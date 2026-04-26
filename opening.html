@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:black;
+  color:white;
+  font-family:'Segoe UI',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  overflow:hidden;
+  text-align:center;
+}
+
+/* CONTAINER */
+.container{
+  padding:20px;
+}
+
+/* TEXT */
+.text{
+  font-size:18px;
+  opacity:0;
+  animation:fadeIn 2s forwards;
+}
+
+/* TYPING EFFECT */
+.typing span{
+  opacity:0;
+  animation:appear .05s forwards;
+}
+
+@keyframes appear{
+  to{opacity:1;}
+}
+
+/* BUTTON */
+.btn{
+  margin-top:25px;
+  padding:10px 20px;
+  background:#ff4e80;
+  border-radius:20px;
+  font-size:14px;
+  cursor:pointer;
+  opacity:0;
+  transform:translateY(10px);
+  transition:0.5s;
+}
+
+.btn.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FADE IN */
+@keyframes fadeIn{
+  to{opacity:1;}
+}
+
+/* CLICK EFFECT */
+.btn:active{
+  transform:scale(0.95);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="text typing" id="text"></div>
+
+<div class="btn" id="btn" onclick="go()">
+Mulai 🎁
+</div>
+
+</div>
+
+<script>
+
+const message="iniii hadiahhhh untukkk kamuuuu 🎁";
+
+const textEl=document.getElementById("text");
+const btn=document.getElementById("btn");
+
+let i=0;
+
+function type(){
+  if(i<message.length){
+    let span=document.createElement("span");
+    span.textContent=message[i];
+    span.style.animationDelay=(i*0.05)+"s";
+    textEl.appendChild(span);
+    i++;
+    setTimeout(type,50);
+  }else{
+    setTimeout(()=>{
+      btn.classList.add("show");
+    },500);
+  }
+}
+
+type();
+
+/* GO TO INDEX */
+function go(){
+  document.body.style.opacity="0";
+  document.body.style.transition="1s";
+  setTimeout(()=>{
+    window.location.href="index.html";
+  },800);
+}
+
+</script>
+
+</body>
+</html>

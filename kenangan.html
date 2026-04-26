@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenangan</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  background:black;
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+}
+
+/* PROGRESS BAR */
+.progress{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:4px;
+  background:rgba(255,255,255,0.2);
+  z-index:9999;
+}
+.bar{
+  height:100%;
+  width:0%;
+  background:white;
+}
+
+/* FOTO */
+.viewer{
+  width:100%;
+  height:100vh;
+  position:relative;
+}
+
+.viewer img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* CLICK AREA */
+.zone{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:calc(100% - 60px);
+  z-index:5;
+}
+.left{left:0;}
+.right{right:0;}
+
+/* CAPTION */
+.caption{
+  position:absolute;
+  bottom:80px;
+  width:100%;
+  text-align:center;
+  color:white;
+  background:rgba(0,0,0,0.4);
+  padding:8px;
+  font-size:14px;
+}
+
+/* MUSIC */
+.music-btn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  width:40px;height:40px;
+  background:#ff4e80;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.music-btn img{width:20px;}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:60px;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:9999;
+}
+.navbar a{
+  color:white;
+  font-size:11px;
+  text-decoration:none;
+  text-align:center;
+}
+.navbar img{
+  width:20px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- PROGRESS -->
+<div class="progress"><div class="bar" id="bar"></div></div>
+
+<div class="viewer">
+  <img id="photo" src="foto1.jpg">
+
+  <div class="zone left" onclick="prev()"></div>
+  <div class="zone right" onclick="next()"></div>
+
+  <div class="caption" id="caption">Iniiii passs kitaaa abissss mainnn baskettt</div>
+</div>
+
+<!-- MUSIC -->
+<div class="music-btn" onclick="toggleMusic()">
+<img src="https://twemoji.maxcdn.com/v/latest/72x72/1f50a.png">
+</div>
+
+<audio id="music" loop>
+<source src="kenangan.mp3">
+</audio>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<a href="index.html"><img src="home.png"><br>Home</a>
+<a href="kenangan.html"><img src="gallery.png"><br>Kenangan</a>
+<a href="tentang.html"><img src="info.png"><br>Tentang</a>
+<a href="creator.html"><img src="user.png"><br>Pembuat</a>
+</div>
+
+<script>
+const photos=[
+  {img:"foto1.jpg", text:"Iniiii passs kitaaa abissss mainnn baskettt"},
+  {img:"foto2.jpg", text:"Iniiiii passss mainnn baskettt tapiii jalannn jalannnn duluuuu"},
+  {img:"foto3.jpg", text:"Hehehehe... akuuuu sengajaaa fotoooo kamuuuu C:"},
+  {img:"foto4.jpg", text:"Siapaaaa yanggg lagiiii jajannnn niiii"},
+  {img:"foto5.jpg", text:"Iniiii fotooo passs kitaaaa lagiiii jalannn jalannn diii islamic"},
+  {img:"foto6.jpg", text:"Pertamaaa kalinyaaa kitaaaa pegangannn tangannn:>"},
+  {img:"foto7.jpg", text:"Iniiii kitaaa jalannn jalannnn sehabisss pulangggg sekolahhhh"},
+  {img:"foto8.jpg", text:"Iniiii jugaaaaaaa dihariii yangggg samaaaaa"},
+  {img:"foto9.jpg", text:"Passss kamuuuu ngajakinnn fotooo trenddd :3"},
+  {img:"foto10.jpg", text:"Akuuuu penguntittt lhooooo"},
+  {img:"foto11.jpg", text:"Lagiiii mammmm jerukkkk kamuuuu C:"}
+];
+
+let i=0;
+let timer;
+let progress=0;
+
+/* SHOW */
+function show(){
+  document.getElementById("photo").src=photos[i].img;
+  document.getElementById("caption").innerText=photos[i].text;
+  resetBar();
+}
+
+/* NEXT */
+function next(){
+  i=(i+1)%photos.length;
+  show();
+}
+
+/* PREV */
+function prev(){
+  i=(i-1+photos.length)%photos.length;
+  show();
+}
+
+/* PROGRESS ANIMATION */
+function startBar(){
+  clearInterval(timer);
+  progress=0;
+
+  timer=setInterval(()=>{
+    progress+=1;
+    document.getElementById("bar").style.width=progress+"%";
+
+    if(progress>=100){
+      next();
+    }
+  },40); // speed
+}
+
+/* RESET */
+function resetBar(){
+  document.getElementById("bar").style.width="0%";
+  startBar();
+}
+
+/* INIT */
+show();
+
+/* MUSIC */
+const music=document.getElementById("music");
+document.addEventListener("click",()=>{
+  music.play().catch(()=>{})
+},{once:true});
+
+function toggleMusic(){
+  music.paused?music.play():music.pause();
+}
+</script>
+
+</body>
+</html>

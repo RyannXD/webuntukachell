@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembuat</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Segoe UI',sans-serif;
+  color:white;
+  overflow-x:hidden;
+  animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+/* BACKGROUND */
+.bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  z-index:-2;
+  transition:opacity 2s;
+}
+#bg1{opacity:1;}
+#bg2{opacity:0;}
+
+.overlay{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  opacity:0.5;
+  z-index:-1;
+}
+
+/* CONTENT */
+.container{
+  padding:80px 15px 90px;
+  text-align:center;
+}
+
+/* FOTO */
+.profile{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  object-fit:cover;
+  border:3px solid white;
+  margin-bottom:12px;
+}
+
+/* TITLE */
+h1{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+/* FAQ */
+.faq{
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(10px);
+  border-radius:12px;
+  margin-bottom:10px;
+  overflow:hidden;
+  text-align:left;
+}
+
+.q{
+  padding:12px;
+  cursor:pointer;
+  font-size:14px;
+  display:flex;
+  justify-content:space-between;
+}
+
+.a{
+  max-height:0;
+  overflow:hidden;
+  transition:0.4s;
+  padding:0 12px;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.a.show{
+  max-height:200px;
+  padding:10px 12px;
+}
+
+.icon{transition:0.3s;}
+.icon.rotate{transform:rotate(90deg);}
+
+/* PERSONAL TOUCH */
+.footer{
+  margin-top:20px;
+  font-size:12px;
+  opacity:0.85;
+  line-height:1.6;
+}
+
+.footer span{
+  display:block;
+}
+
+/* MUSIC */
+.music-btn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  width:32px;
+  height:32px;
+  background:#ff4e80;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.music-btn img{width:16px;}
+
+/* NAVBAR */
+.navbar{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:55px;
+  background:rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:9999;
+}
+.navbar a{
+  color:white;
+  font-size:11px;
+  text-decoration:none;
+  text-align:center;
+}
+.navbar img{
+  width:18px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div id="bg1" class="bg"></div>
+<div id="bg2" class="bg"></div>
+<div class="overlay"></div>
+
+<!-- MUSIC -->
+<div class="music-btn" onclick="toggleMusic()">
+<img src="https://twemoji.maxcdn.com/v/latest/72x72/1f50a.png">
+</div>
+
+<audio id="music" loop>
+<source src="hbd.mp3">
+</audio>
+
+<!-- CONTENT -->
+<div class="container">
+
+<img src="creator.jpg" class="profile">
+
+<h1>Pembuat</h1>
+
+<!-- FAQ -->
+<div class="faq">
+  <div class="q" onclick="toggle(this)">
+    Untukkk apaaa websiteee iniii dibuattt?
+    <span class="icon">⮕</span>
+  </div>
+  <div class="a">
+    Hadiahhhh untukkk oranggg spesialll, walaupunnn takkkk seberapaaa yanggg mentinggg ia senenggg
+  </div>
+</div>
+
+<div class="faq">
+  <div class="q" onclick="toggle(this)">
+    Berapaaa hariii dibuattt??
+    <span class="icon">⮕</span>
+  </div>
+  <div class="a">
+    7 atauuuu 8 hariii dibuattt sampaiii hariii mingguu, walaupunnnn susahhh tapiiii akuuuu mauuuu melihattt kamuuuu senyummmm
+  </div>
+</div>
+
+<div class="faq">
+  <div class="q" onclick="toggle(this)">
+    Apakahhh iyannnn masiii sayangggg achellll??
+    <span class="icon">⮕</span>
+  </div>
+  <div class="a">
+    masiiii donggggsss, kalauuuu takkkkk kenapaaa akuuuuu membuattt iniiii
+  </div>
+</div>
+
+<!-- ✨ PERSONAL TOUCH -->
+<div class="footer">
+  <span>Made with ❤️ for you</span>
+  <span>27 April 2010 🎂</span>
+  <span>- R -</span>
+</div>
+
+</div>
+
+<!-- NAVBAR -->
+<div class="navbar">
+<a href="index.html"><img src="home.png"><br>Home</a>
+<a href="kenangan.html"><img src="gallery.png"><br>Kenangan</a>
+<a href="tentang.html"><img src="info.png"><br>Tentang</a>
+<a href="creator.html"><img src="user.png"><br>Pembuat</a>
+</div>
+
+<script>
+
+/* BACKGROUND */
+const images=["bg1.jpg","bg2.jpg","bg3.jpg"];
+let i=1,active=1;
+
+document.getElementById("bg1").style.backgroundImage=`url(${images[0]})`;
+
+setInterval(()=>{
+let next=(active===1)?2:1;
+
+document.getElementById("bg"+next).style.backgroundImage=`url(${images[i]})`;
+document.getElementById("bg"+next).style.opacity=1;
+document.getElementById("bg"+active).style.opacity=0;
+
+active=next;
+i=(i+1)%images.length;
+
+},5000);
+
+/* MUSIC */
+const music=document.getElementById("music");
+document.addEventListener("click",()=>{
+  music.play().catch(()=>{})
+},{once:true});
+
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
+}
+
+/* FAQ */
+function toggle(el){
+  const answer = el.nextElementSibling;
+  const icon = el.querySelector(".icon");
+
+  answer.classList.toggle("show");
+  icon.classList.toggle("rotate");
+}
+
+</script>
+
+</body>
+</html>
